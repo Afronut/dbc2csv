@@ -71,7 +71,7 @@ def json2csv(json_file, excel_file):
         for hd in header:
             try:
                 if hd=="signals":
-                    newDict[hd]=hd
+                    newDict[hd]=""
                     continue
                 newDict[hd]=el[hd]
             except:
@@ -79,9 +79,11 @@ def json2csv(json_file, excel_file):
         data.append(newDict)
         for skey in el['signals']:  # loop over all keys in signals
             newDict=dict()
+            # print(skey)
+            # newDict['name']=skey
             for hd in header:
                 if hd=="signals":
-                    newDict[hd]=""
+                    newDict[hd]=skey
                     continue
                 try:
                     newDict[hd]=el['signals'][skey][hd]
