@@ -41,18 +41,19 @@ def dbc2json(dbc_file):
             candt['signals']=signals
         
         jsonData.append(candt) # append to json data
-    with open('dbc.json', 'w') as f: # save to json file
-        f.write(json.dumps(jsonData, indent=4)) #   print(df)
+    # with open('dbc.json', 'w') as f: # save to json file
+    #     f.write(json.dumps(jsonData, indent=4)) #   print(df)
+    return jsonData
     
 
 
-def json2csv(json_file, excel_file):
+def json2df(js):
     """
     Convert a json file to a csv file
 
     
     """
-    js=json.load(open(json_file)) # load json file
+    # js=json.load(open(json_file)) # load json file
     
     data=[]
     header=[]
@@ -91,9 +92,27 @@ def json2csv(json_file, excel_file):
                     newDict[hd]=''
             data.append(newDict)
     df=pd.DataFrame(data)
-    df.to_csv(excel_file, index=False) # save to csv
-    df.to_excel("dbc.xlsx", index=False) #save to excel
+    return df
+
+
+
+def dbc2Excel(dbc_file, excel_file):
+    """
+    Convert a dbc file to a csv file
+    """
+    jsfile=dbc2json(dbc_file)
+    df=json2df(jsfile)
+    df.to_excel(excel_file, index=False) #save to excel
+
+
+def dbc2csv(dbc_file, csv_file):
+    """
+    Convert a dbc file to a csv file
+    """
+    jsfile=dbc2json(dbc_file)
+    df=json2df(jsfile)
+    df.to_csv(csv_file, index=False) #save to csv
 
 if __name__ == '__main__':
-    dbc2json('can_dbc.dbc')
-    json2csv('dbc.json', 'dbc.csv')
+    dbc2csv('can_dbc.dbc', 'can_dbc.csv')
+    dbc2Excel('can_dbc.dbc', 'can_dbc.xlsx')
