@@ -3,7 +3,7 @@ import pandas as pd
 
 def dbc2dict(dbc_file):
     """
-    Convert a dbc file to a json file
+    Convert a dbc file to a dictionary
     """
     dbc = cantools.db.load_file(dbc_file)
     dictData=[]
@@ -45,7 +45,7 @@ def dbc2dict(dbc_file):
 
 def normalizeDf(js):
     """
-    Convert a json file to a csv file
+    Normalize the dataframe
 
     
     """
@@ -91,7 +91,7 @@ def normalizeDf(js):
 
 def dbc2Excel(dbc_file, excel_file):
     """
-    Convert a dbc file to a csv file
+    Convert a dbc file to a excel file
     """
     dic=dbc2dict(dbc_file)
     df=normalizeDf(dic)
