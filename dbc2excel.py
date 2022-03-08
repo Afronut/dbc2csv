@@ -1,15 +1,12 @@
-from hashlib import new
 import cantools
-from pprint import pprint
 import pandas as pd
-import json
 
-def dbc2json(dbc_file):
+def dbc2dict(dbc_file):
     """
     Convert a dbc file to a json file
     """
     dbc = cantools.db.load_file(dbc_file)
-    jsonData=[]
+    dictData=[]
 
     for message in dbc.messages: # loop over all messages in the dbc file
         candt=dict()
@@ -40,20 +37,18 @@ def dbc2json(dbc_file):
             signals[signal.name]['byte_order']=signal.byte_order
             candt['signals']=signals
         
-        jsonData.append(candt) # append to json data
-    # with open('dbc.json', 'w') as f: # save to json file
-    #     f.write(json.dumps(jsonData, indent=4)) #   print(df)
-    return jsonData
+        dictData.append(candt) # append to json data
+    
+    return dictData
     
 
 
-def json2df(js):
+def normalizeDf(js):
     """
     Convert a json file to a csv file
 
     
     """
-    # js=json.load(open(json_file)) # load json file
     
     data=[]
     header=[]
@@ -100,8 +95,8 @@ def dbc2Excel(dbc_file, excel_file):
     """
     Convert a dbc file to a csv file
     """
-    jsfile=dbc2json(dbc_file)
-    df=json2df(jsfile)
+    jsfile=dbc2dict(dbc_file)
+    df=normalizeDf(jsfile)
     df.to_excel(excel_file, index=False) #save to excel
 
 
@@ -109,8 +104,8 @@ def dbc2csv(dbc_file, csv_file):
     """
     Convert a dbc file to a csv file
     """
-    jsfile=dbc2json(dbc_file)
-    df=json2df(jsfile)
+    jsfile=dbc2dict(dbc_file)
+    df=normalizeDf(jsfile)
     df.to_csv(csv_file, index=False) #save to csv
 
 if __name__ == '__main__':
