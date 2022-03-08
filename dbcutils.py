@@ -75,8 +75,6 @@ def normalizeDf(js):
         data.append(newDict)
         for skey in el['signals']:  # loop over all keys in signals
             newDict=dict()
-            # print(skey)
-            # newDict['name']=skey
             for hd in header:
                 if hd=="signals":
                     newDict[hd]=skey
@@ -95,8 +93,8 @@ def dbc2Excel(dbc_file, excel_file):
     """
     Convert a dbc file to a csv file
     """
-    jsfile=dbc2dict(dbc_file)
-    df=normalizeDf(jsfile)
+    dic=dbc2dict(dbc_file)
+    df=normalizeDf(dic)
     df.to_excel(excel_file, index=False) #save to excel
 
 
@@ -104,8 +102,8 @@ def dbc2csv(dbc_file, csv_file):
     """
     Convert a dbc file to a csv file
     """
-    jsfile=dbc2dict(dbc_file)
-    df=normalizeDf(jsfile)
+    dic=dbc2dict(dbc_file)
+    df=normalizeDf(dic)
     df.to_csv(csv_file, index=False) #save to csv
 
 if __name__ == '__main__':
